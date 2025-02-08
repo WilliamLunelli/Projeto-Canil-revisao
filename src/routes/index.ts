@@ -1,6 +1,6 @@
 import { Router } from "express";
-import * as pageController from '../controllers/pageController';
-import * as searchController from '../controllers/searchController'
+import * as pageController from '../Controllers/pageController';
+import * as searchController from '../Controllers/searchController'
 
 const router = Router();
 
