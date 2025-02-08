@@ -12,7 +12,6 @@ const Petschema = z.object({
     vaccinated: z.boolean(),
     description: z.string().min(10).max(100),
     status: z.enum(['available', 'pending', 'adopted']).default('available'),
-    createdAt: z.date().default(() => new Date())
 })
 
 type Pet = z.infer<typeof Petschema>
@@ -29,7 +28,6 @@ const data: Pet[] = [
         vaccinated: true,
         description: 'Pastor Alemão dócil e bem treinado. Ótimo com crianças e excelente cão de guarda. Vacinado e vermifugado.',
         status: 'available',
-        createdAt: new Date('2024-01-15')
     },
     {
         type: 'dog',
@@ -42,7 +40,6 @@ const data: Pet[] = [
         vaccinated: true,
         description: 'Labrador jovem e brincalhão. Adora água e é muito carinhoso. Todas as vacinas em dia.',
         status: 'available',
-        createdAt: new Date('2024-01-20')
     },
     {
         type: 'dog',
@@ -55,7 +52,6 @@ const data: Pet[] = [
         vaccinated: true,
         description: 'Spitz alemão pequeno e alegre. Muito inteligente e afetuosa. Ótima companheira.',
         status: 'available',
-        createdAt: new Date('2024-01-25')
     },
     {
         type: 'dog',
@@ -68,7 +64,6 @@ const data: Pet[] = [
         vaccinated: true,
         description: 'Husky energético e amigável. Precisa de espaço e exercícios regulares. Ótimo com famílias ativas.',
         status: 'pending',
-        createdAt: new Date('2024-01-28')
     },
     {
         type: 'dog',
@@ -81,7 +76,6 @@ const data: Pet[] = [
         vaccinated: true,
         description: 'Golden retriever adulto e bem treinado. Extremamente dócil e paciente com crianças.',
         status: 'available',
-        createdAt: new Date('2024-02-01')
     },
     {
         type: 'dog',
@@ -94,7 +88,6 @@ const data: Pet[] = [
         vaccinated: true,
         description: 'Poodle inteligente e elegante. Ótima para apartamentos. Não solta pelos.',
         status: 'available',
-        createdAt: new Date('2024-02-05')
     },
     {
         type: 'dog',
@@ -107,7 +100,6 @@ const data: Pet[] = [
         vaccinated: true,
         description: 'Bulldog tranquilo e amigável. Ótimo com crianças e outros animais. Ideal para apartamentos.',
         status: 'available',
-        createdAt: new Date('2024-02-08')
     },
     {
         type: 'cat',
@@ -120,7 +112,6 @@ const data: Pet[] = [
         vaccinated: true,
         description: 'Gato persa de pelagem longa e densa. Calmo e afetuoso. Ideal para apartamentos.',
         status: 'available',
-        createdAt: new Date('2024-02-10')
     },
     {
         type: 'cat',
@@ -133,7 +124,6 @@ const data: Pet[] = [
         vaccinated: true,
         description: 'Maine Coon de grande porte. Personalidade dócil apesar do tamanho. Muito sociável.',
         status: 'available',
-        createdAt: new Date('2024-02-12')
     },
     {
         type: 'cat',
@@ -146,7 +136,6 @@ const data: Pet[] = [
         vaccinated: true,
         description: 'Gata Bengal ativa e brincalhona. Aparência exótica. Precisa de estimulação mental.',
         status: 'pending',
-        createdAt: new Date('2024-02-15')
     },
     {
         type: 'cat',
@@ -159,7 +148,6 @@ const data: Pet[] = [
         vaccinated: true,
         description: 'Siamês jovem e muito ativo. Comunicativo e sociável. Adora brincar com outros gatos.',
         status: 'available',
-        createdAt: new Date('2024-02-18')
     },
     {
         type: 'cat',
@@ -172,7 +160,6 @@ const data: Pet[] = [
         vaccinated: true,
         description: 'Gato Sphynx sem pelos. Muito afetuoso e necessita de cuidados especiais com a pele.',
         status: 'available',
-        createdAt: new Date('2024-02-20')
     },
     {
         type: 'fish',
@@ -185,7 +172,6 @@ const data: Pet[] = [
         vaccinated: false,
         description: 'Peixe pequeno e colorido, perfeito para aquários comunitários. Muito pacífico.',
         status: 'available',
-        createdAt: new Date('2024-02-22')
     },
     {
         type: 'fish',
@@ -198,7 +184,6 @@ const data: Pet[] = [
         vaccinated: false,
         description: 'Peixe pequeno e ativo. Ideal para aquários comunitários. Muito resistente.',
         status: 'available',
-        createdAt: new Date('2024-02-24')
     },
     {
         type: 'fish',
@@ -211,7 +196,6 @@ const data: Pet[] = [
         vaccinated: false,
         description: 'Peixe útil para manutenção do aquário. Ajuda a manter os vidros limpos.',
         status: 'available',
-        createdAt: new Date('2024-02-26')
     },
     {
         type: 'fish',
@@ -223,9 +207,8 @@ const data: Pet[] = [
         weight: 0.003,
         vaccinated: false,
         description: 'Peixe de fundo ativo. Ótimo para aquários comunitários. Ajuda na limpeza.',
-        status: 'available',
-        createdAt: new Date('2024-02-28')
-    },
+        status: 'available', 
+        },
     {
         type: 'fish',
         image: 'acara.jpg',
@@ -237,7 +220,6 @@ const data: Pet[] = [
         vaccinated: false,
         description: 'Peixe elegante e territorial. Requer aquário espaçoso. Muito bonito.',
         status: 'available',
-        createdAt: new Date('2024-03-01')
     }
 ];
 
