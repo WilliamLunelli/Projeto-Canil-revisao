@@ -7,18 +7,18 @@
 
 <div class="container list">
     {{#list}}
-        <!-- Adicionamos um link envolvendo todo o item -->
+        
         <a href="/pet/{{name}}" class="item">
-            <!-- Seção principal com foto e nome -->
+            
             <img src="/images/{{ image }}" class="item--image" />
             <div class="item--name">{{ name }}</div>
             
-            <!-- Informações básicas -->
+            
             <div class="item--color">Cor: {{ color }}</div>
             <div class="item--genre">Gênero: {{ sex }}</div>
             <div class="item--age">Idade: {{ age }} anos</div>
             
-            <!-- Status e vacinação com formatação condicional -->
+            
             <div class="item--status">
                 Status: 
                 {{#status}}
@@ -31,7 +31,7 @@
                 Vacinado: {{#vaccinated}}Sim{{/vaccinated}}{{^vaccinated}}Não{{/vaccinated}}
             </div>
 
-            <!-- Preview da descrição com reticências -->
+            
             <div class="item--description">
                 {{ description }}
             </div>

@@ -256,17 +256,17 @@ export const Pet = {
 
     getByExactName: (name: string): Pet | null => {
         try {
-            // Mantemos a mesma validação de entrada que já funcionava bem
+            
             const searchSchema = z.string().min(1);
             const validatedName = searchSchema.parse(name);
             
-            // Em vez de filter, usamos find para retornar apenas um pet
-            // E fazemos uma comparação exata (===) em vez de indexOf
+            
+            
             const foundPet = data.find(item => 
                 item.name.toLowerCase() === validatedName.toLowerCase()
             );
             
-            // Retornamos o pet encontrado ou null se não encontrar
+            
             return foundPet || null;
             
         } catch (error) {
