@@ -7,25 +7,42 @@
 
 <div class="container list">
     {{#list}}
-        <div class="item">
-            <img src="images/{{ image }}" class="item--image" />
+        <!-- Adicionamos um link envolvendo todo o item -->
+        <a href="/pet/{{name}}" class="item">
+            <!-- Seção principal com foto e nome -->
+            <img src="/images/{{ image }}" class="item--image" />
             <div class="item--name">{{ name }}</div>
+            
+            <!-- Informações básicas -->
             <div class="item--color">Cor: {{ color }}</div>
             <div class="item--genre">Gênero: {{ sex }}</div>
-            <div class="item--age">Idade: {{ age }}</div>
-            <div class="item--weight">Peso: {{ weight }}</div>
-            <div class="item--vaccinated">Vacinado: {{ vaccinated }}</div>
-            <div class="item--description">Descrição: {{ description }}</div>
-            <div class="item--status">Status: {{ status }}</div>
-    </div>
-    {{/list}}
-   </div> 
+            <div class="item--age">Idade: {{ age }} anos</div>
+            
+            <!-- Status e vacinação com formatação condicional -->
+            <div class="item--status">
+                Status: 
+                {{#status}}
+                    {{#available}}Disponível{{/available}}
+                    {{#pending}}Em Processo{{/pending}}
+                    {{#adopted}}Adotado{{/adopted}}
+                {{/status}}
+            </div>
+            <div class="item--vaccinated">
+                Vacinado: {{#vaccinated}}Sim{{/vaccinated}}{{^vaccinated}}Não{{/vaccinated}}
+            </div>
 
-   {{^list}}
-        <div class="container no-list">
-            <h2>"Não há animais disponíveis nessas condições"</h2>
-        </div>
-   {{/list}}
-    
+            <!-- Preview da descrição com reticências -->
+            <div class="item--description">
+                {{ description }}
+            </div>
+        </a>
+    {{/list}}
+</div> 
+
+{{^list}}
+    <div class="container no-list">
+        <h2>Não há animais disponíveis nessas condições</h2>
+    </div>
+{{/list}}
 
 {{>partials/footer}}

@@ -1,0 +1,64 @@
+{{>partials/header}}
+
+{{#banner}}
+<section class="banner" style="background-image: url('images/{{ background }}')">{{ title }}</section>
+{{/banner}}
+
+<div class="pet-detail">
+    <div class="pet-detail--image-area">
+        <img src="/images/{{pet.image}}" class="pet-detail--image" />
+    </div>
+    
+    <div class="pet-detail--info">
+        <h2 class="pet-detail--title">{{pet.name}}</h2>
+        
+        <div class="pet-detail--data">
+            <div class="pet-detail--data-item">
+                <div class="pet-detail--data-label">Tipo:</div>
+                <div>{{pet.type}}</div>
+            </div>
+            
+            <div class="pet-detail--data-item">
+                <div class="pet-detail--data-label">Cor:</div>
+                <div>{{pet.color}}</div>
+            </div>
+            
+            <div class="pet-detail--data-item">
+                <div class="pet-detail--data-label">Sexo:</div>
+                <div>{{pet.sex}}</div>
+            </div>
+            
+            <div class="pet-detail--data-item">
+                <div class="pet-detail--data-label">Idade:</div>
+                <div>{{pet.age}} anos</div>
+            </div>
+            
+            <div class="pet-detail--data-item">
+                <div class="pet-detail--data-label">Peso:</div>
+                <div>{{pet.weight}} kg</div>
+            </div>
+            
+            <div class="pet-detail--data-item">
+                <div class="pet-detail--data-label">Vacinado:</div>
+                <div>{{#pet.vaccinated}}Sim{{/pet.vaccinated}}{{^pet.vaccinated}}Não{{/pet.vaccinated}}</div>
+            </div>
+        </div>
+
+        <div class="pet-detail--description">
+            {{pet.description}}
+        </div>
+
+        <div class="pet-detail--data-item">
+            <div class="pet-detail--data-label">Status:</div>
+            <div class="pet-detail--status status-{{pet.status}}">
+                {{#pet.status}}
+                    {{#available}}Disponível para Adoção{{/available}}
+                    {{#pending}}Em Processo de Adoção{{/pending}}
+                    {{#adopted}}Já Adotado{{/adopted}}
+                {{/pet.status}}
+            </div>
+        </div>
+    </div>
+</div>
+
+{{>partials/footer}}
