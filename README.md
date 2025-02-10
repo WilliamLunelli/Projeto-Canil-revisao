@@ -53,7 +53,7 @@ src/
 - Módulo de agendamento de visitas
 
 ## 👨‍💻 Desenvolvedor
-William Lunelli
+William Lunelli & B7Web
 
 ## 📱 Contato
 GitHub: [@WilliamLunelli](https://github.com/WilliamLunelli)
