@@ -18,10 +18,21 @@ enum Sex {
   female
 }
 
+enum Avaible {
+  avaible
+  pending
+}
+
 model Pet {
-  id    Int    @id @default(autoincrement())
-  type  String
-  image String
-  color String
-  sex   Sex
+  id          Int     @id @default(autoincrement())
+  type        String
+  image       String
+  name        String
+  color       String
+  sex         Sex
+  age         Int
+  weight      Float
+  vaccinated  Boolean
+  description String
+  status      Avaible
 }

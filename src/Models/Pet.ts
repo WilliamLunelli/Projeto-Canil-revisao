@@ -239,33 +239,43 @@ const data: Pet[] = [
   },
 ];
 
+const searchNameSchema = z
+  .string()
+  .min(1, "Nome deve ter pelo menos 1 caractere");
+
 export const Pet = {
-  getAll: () => {
+  getAll: (): Pet[] => {
     return data;
   },
+
   getFromType: (type: z.infer<typeof Petschema.shape.type>): Pet[] => {
     try {
       const validatedType = Petschema.shape.type.parse(type);
       return data.filter((item) => item.type === validatedType);
     } catch (error) {
       if (error instanceof z.ZodError) {
-        console.error("tipo inválido", error.errors);
+        console.error("Erro na validação do tipo:", {
+          code: "INVALID_TYPE",
+          details: error.errors,
+        });
       }
       return [];
     }
   },
+
   getFromName: (name: string): Pet[] => {
     try {
-      const searchSchema = z.string().min(1);
-      const validatedName = searchSchema.parse(name);
+      const validatedName = searchNameSchema.parse(name);
 
-      return data.filter(
-        (item) =>
-          item.name.toLowerCase().indexOf(validatedName.toLowerCase()) > -1
+      return data.filter((item) =>
+        item.name.toLowerCase().includes(validatedName.toLowerCase())
       );
     } catch (error) {
       if (error instanceof z.ZodError) {
-        console.error("nome inválido para busca", error.errors);
+        console.error("Erro na validação do nome:", {
+          code: "INVALID_NAME",
+          details: error.errors,
+        });
       }
       return [];
     }
@@ -273,18 +283,19 @@ export const Pet = {
 
   getByExactName: (name: string): Pet | null => {
     try {
-      const searchSchema = z.string().min(1);
-      const validatedName = searchSchema.parse(name);
+      const validatedName = searchNameSchema.parse(name);
 
-      const foundPet = data.find(
-        (item) => item.name.toLowerCase() === validatedName.toLowerCase()
+      return (
+        data.find(
+          (item) => item.name.toLowerCase() === validatedName.toLowerCase()
+        ) || null
       );
-
-      return foundPet || null;
     } catch (error) {
-      // Mantemos o mesmo tratamento de erro que já estava funcionando
       if (error instanceof z.ZodError) {
-        console.error("Nome inválido para busca:", error.errors);
+        console.error("Erro na validação do nome exato:", {
+          code: "INVALID_EXACT_NAME",
+          details: error.errors,
+        });
       }
       return null;
     }
