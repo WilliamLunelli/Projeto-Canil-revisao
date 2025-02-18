@@ -3,7 +3,7 @@ import z from "zod";
 
 const prisma = new PrismaClient();
 
-const Petschema = z.object({
+const PetSchema = z.object({
   type: z.enum(["dog", "cat", "fish"]),
   image: z.string().min(2).max(50),
   name: z.string().min(2).max(50),
@@ -16,7 +16,7 @@ const Petschema = z.object({
   status: z.enum(["available", "pending", "adopted"]).default("available"),
 });
 
-type Pet = z.infer<typeof Petschema>;
+type Pet = z.infer<typeof PetSchema>;
 
 const searchNameSchema = z
   .string()
@@ -26,7 +26,7 @@ export const Pet = {
   getAll: async (): Promise<Pet[]> => {
     try {
       const pets = await prisma.pet.findMany();
-      return Petschema.array().parse(pets);
+      return PetSchema.array().parse(pets);
     } catch (error) {
       console.error("Error retrieving pets:", error);
       return [];
@@ -34,16 +34,16 @@ export const Pet = {
   },
 
   getFromType: async (
-    type: z.infer<typeof Petschema.shape.type>
+    type: z.infer<typeof PetSchema.shape.type>
   ): Promise<Pet[]> => {
     try {
-      const validatedType = Petschema.shape.type.parse(type);
+      const validatedType = PetSchema.shape.type.parse(type);
       const pets = await prisma.pet.findMany({
         where: {
           type: validatedType,
         },
       });
-      return Petschema.array().parse(pets);
+      return PetSchema.array().parse(pets);
     } catch (error) {
       if (error instanceof z.ZodError) {
         console.error("Erro na validação do tipo:", {
@@ -69,7 +69,7 @@ export const Pet = {
         },
       });
 
-      return Petschema.array().parse(pets);
+      return PetSchema.array().parse(pets);
     } catch (error) {
       if (error instanceof z.ZodError) {
         console.error("Erro na validação do nome:", {
@@ -99,7 +99,7 @@ export const Pet = {
       }
 
       // Parse the resolved data, not the promise
-      return Petschema.parse(pet);
+      return PetSchema.parse(pet);
     } catch (error) {
       if (error instanceof z.ZodError) {
         console.error("Erro na validação do nome exato:", {

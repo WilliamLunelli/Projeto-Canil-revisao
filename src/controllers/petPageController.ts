@@ -5,10 +5,8 @@ import { z } from "zod";
 export const showPetPage = async (req: Request, res: Response) => {
   try {
     const petName = req.params.name;
-    console.log("Requested pet name:", petName);
 
     const pet = await Pet.getByExactName(petName);
-    console.log("Pet data:", pet);
 
     if (!pet) {
       console.log(`Pet não encontrado: ${petName}`);

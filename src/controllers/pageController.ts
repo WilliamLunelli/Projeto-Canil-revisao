@@ -7,9 +7,7 @@ export const home = async (req: Request, res: Response) => {
     const pets = await Pet.getAll();
 
     res.render("pages/page", {
-      menu: {
-        all: true,
-      },
+      menu: createMenuObject("all"),
       banner: {
         title: "Todos os animais",
         background: "allanimals.jpg",
@@ -29,8 +27,8 @@ export const home = async (req: Request, res: Response) => {
   }
 };
 
-export const dogs = (req: Request, res: Response) => {
-  let list = Pet.getFromType("dog");
+export const dogs = async (req: Request, res: Response) => {
+  const pets = await Pet.getFromType("dog");
 
   res.render("pages/page", {
     menu: createMenuObject("dogs"),
@@ -38,12 +36,19 @@ export const dogs = (req: Request, res: Response) => {
       title: "Cachorros",
       background: "banner_dog.jpg",
     },
-    list,
+    list: pets.map((pet) => ({
+      ...pet,
+      status: {
+        available: pet.status === "available",
+        pending: pet.status === "pending",
+        adopted: pet.status === "adopted",
+      },
+    })),
   });
 };
 
-export const cats = (req: Request, res: Response) => {
-  let list = Pet.getFromType("cat");
+export const cats = async (req: Request, res: Response) => {
+  const pets = await Pet.getFromType("cat");
 
   res.render("pages/page", {
     menu: createMenuObject("cats"),
@@ -51,13 +56,19 @@ export const cats = (req: Request, res: Response) => {
       title: "Gatos",
       background: "banner_cat.jpg",
     },
-
-    list,
+    list: pets.map((pet) => ({
+      ...pet,
+      status: {
+        available: pet.status === "available",
+        pending: pet.status === "pending",
+        adopted: pet.status === "adopted",
+      },
+    })),
   });
 };
 
-export const fishes = (req: Request, res: Response) => {
-  let list = Pet.getFromType("fish");
+export const fishes = async (req: Request, res: Response) => {
+  let list = await Pet.getFromType("fish");
 
   res.render("pages/page", {
     menu: createMenuObject("fishes"),
