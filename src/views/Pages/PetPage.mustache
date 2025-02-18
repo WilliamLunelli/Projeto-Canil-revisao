@@ -4,11 +4,11 @@
 <section class="banner" style="background-image: url('images/{{ background }}')">{{ title }}</section>
 {{/banner}}
 
-{{ #pet }}
+{{#pet}}
 
 <div class="pet-detail">
     <div class="pet-detail--image-area">
-        <img src="/images/{{pet.image}}" class="pet-detail--image" />
+        <img src="/images/{{ image }}" class="pet-detail--image" />
     </div>
     
     <div class="pet-detail--info">
@@ -52,7 +52,7 @@
 
         <div class="pet-detail--data-item">
             <div class="pet-detail--data-label">Status:</div>
-            <div class="pet-detail--status status-{{pet.status}}">
+            <div class="pet-detail--status status-{{status}}">
                 {{#status}}
                     {{#available}}Disponível para Adoção{{/available}}
                     {{#pending}}Em Processo de Adoção{{/pending}}

@@ -3,5 +3,5 @@ import animalRouter from "./animals";
 
 const router = Router();
 
-router.use(animalRouter)
+router.use(animalRouter);
 export default router;

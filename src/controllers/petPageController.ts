@@ -1,50 +1,42 @@
-import { Request, Response } from 'express';
-import { Pet } from '../Models/Pet';
-import { z } from 'zod';
+import { Request, Response } from "express";
+import { Pet } from "../Models/Pet";
+import { z } from "zod";
 
-export const showPetPage = (req: Request, res: Response) => {
-
+export const showPetPage = async (req: Request, res: Response) => {
+  try {
     const petName = req.params.name;
-    
-    try {
+    console.log("Requested pet name:", petName);
 
-        const nameSchema = z.string().min(1);
-        const validatedName = nameSchema.parse(petName);
-        
+    const pet = await Pet.getByExactName(petName);
+    console.log("Pet data:", pet);
 
-        const pet = Pet.getByExactName(validatedName);
-        
-
-        if (!pet) {
-            console.log(`Pet não encontrado: ${validatedName}`);
-            res.redirect('/404');
-            return;
-        }
-
-
-        res.render('pages/petPage', {
-
-            banner: {
-                title: pet.name,
-                background: `/images/${pet.image}`
-            },
-
-            pet: {
-                ...pet,
-
-                status: {
-                    [pet.status]: true
-                }
-            },
-
-            menu: {
-                all: true 
-            }
-        });
-
-    } catch (error) {
-
-        console.error('Erro ao processar página do pet:', error);
-        res.redirect('/');
+    if (!pet) {
+      console.log(`Pet não encontrado: ${petName}`);
+      res.redirect("/404");
+      return;
     }
+
+    const renderData = {
+      menu: { all: true },
+      banner: {
+        title: pet.name,
+        background: pet.image,
+      },
+      pet: {
+        ...pet,
+        status:
+          pet.status === "available"
+            ? { available: true, pending: false, adopted: false }
+            : pet.status === "pending"
+            ? { available: false, pending: true, adopted: false }
+            : { available: false, pending: false, adopted: true },
+      },
+    };
+
+    console.log("Data being sent to template:", renderData);
+    res.render("pages/petPage", renderData);
+  } catch (error) {
+    console.error("Erro ao processar página do pet:", error);
+    res.redirect("/");
+  }
 };

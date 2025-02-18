@@ -1,4 +1,7 @@
+import { Prisma, PrismaClient } from "@prisma/client";
 import z from "zod";
+
+const prisma = new PrismaClient();
 
 const Petschema = z.object({
   type: z.enum(["dog", "cat", "fish"]),
@@ -9,267 +12,64 @@ const Petschema = z.object({
   age: z.number().min(0).max(30),
   weight: z.number().positive(),
   vaccinated: z.boolean(),
-  description: z.string().min(10).max(100),
+  description: z.string().min(10).max(500),
   status: z.enum(["available", "pending", "adopted"]).default("available"),
 });
 
 type Pet = z.infer<typeof Petschema>;
-
-const data: Pet[] = [
-  {
-    type: "dog",
-    image: "pastor-alemao.jpg",
-    name: "Pastor-alemão",
-    color: "Amarelo e Preto",
-    sex: "male",
-    age: 3,
-    weight: 32.5,
-    vaccinated: true,
-    description:
-      "Pastor Alemão dócil e bem treinado. Ótimo com crianças e excelente cão de guarda. Vacinado e vermifugado.",
-    status: "available",
-  },
-  {
-    type: "dog",
-    image: "labrador.jpg",
-    name: "Labrador-retriever",
-    color: "Branco",
-    sex: "male",
-    age: 2,
-    weight: 28.3,
-    vaccinated: true,
-    description:
-      "Labrador jovem e brincalhão. Adora água e é muito carinhoso. Todas as vacinas em dia.",
-    status: "available",
-  },
-  {
-    type: "dog",
-    image: "zwergspitz.jpg",
-    name: "Zwergspitz",
-    color: "Amarelo",
-    sex: "female",
-    age: 1,
-    weight: 3.5,
-    vaccinated: true,
-    description:
-      "Spitz alemão pequeno e alegre. Muito inteligente e afetuosa. Ótima companheira.",
-    status: "available",
-  },
-  {
-    type: "dog",
-    image: "husky.jpg",
-    name: "Husky Siberiano",
-    color: "Branco e Preto",
-    sex: "male",
-    age: 2,
-    weight: 25.0,
-    vaccinated: true,
-    description:
-      "Husky energético e amigável. Precisa de espaço e exercícios regulares. Ótimo com famílias ativas.",
-    status: "pending",
-  },
-  {
-    type: "dog",
-    image: "golden.jpg",
-    name: "Golden Retriever",
-    color: "Amarelo",
-    sex: "male",
-    age: 4,
-    weight: 30.2,
-    vaccinated: true,
-    description:
-      "Golden retriever adulto e bem treinado. Extremamente dócil e paciente com crianças.",
-    status: "available",
-  },
-  {
-    type: "dog",
-    image: "poodle.jpg",
-    name: "Poodle",
-    color: "Branco",
-    sex: "female",
-    age: 3,
-    weight: 5.8,
-    vaccinated: true,
-    description:
-      "Poodle inteligente e elegante. Ótima para apartamentos. Não solta pelos.",
-    status: "available",
-  },
-  {
-    type: "dog",
-    image: "bulldog.jpg",
-    name: "Bulldog",
-    color: "Branco e Amarelo",
-    sex: "male",
-    age: 2,
-    weight: 24.0,
-    vaccinated: true,
-    description:
-      "Bulldog tranquilo e amigável. Ótimo com crianças e outros animais. Ideal para apartamentos.",
-    status: "available",
-  },
-  {
-    type: "cat",
-    image: "persa.jpg",
-    name: "Persa",
-    color: "Amarelo",
-    sex: "male",
-    age: 4,
-    weight: 4.2,
-    vaccinated: true,
-    description:
-      "Gato persa de pelagem longa e densa. Calmo e afetuoso. Ideal para apartamentos.",
-    status: "available",
-  },
-  {
-    type: "cat",
-    image: "mainecoon.jpg",
-    name: "Maine Coon",
-    color: "Preto e Branco",
-    sex: "male",
-    age: 3,
-    weight: 7.5,
-    vaccinated: true,
-    description:
-      "Maine Coon de grande porte. Personalidade dócil apesar do tamanho. Muito sociável.",
-    status: "available",
-  },
-  {
-    type: "cat",
-    image: "bengal.jpg",
-    name: "Bengal",
-    color: "Branco, Preto e Amarelo",
-    sex: "female",
-    age: 2,
-    weight: 4.8,
-    vaccinated: true,
-    description:
-      "Gata Bengal ativa e brincalhona. Aparência exótica. Precisa de estimulação mental.",
-    status: "pending",
-  },
-  {
-    type: "cat",
-    image: "siames.jpg",
-    name: "Siamês",
-    color: "Amarelo e Preto",
-    sex: "male",
-    age: 1,
-    weight: 3.8,
-    vaccinated: true,
-    description:
-      "Siamês jovem e muito ativo. Comunicativo e sociável. Adora brincar com outros gatos.",
-    status: "available",
-  },
-  {
-    type: "cat",
-    image: "sphynx.jpg",
-    name: "Sphynx",
-    color: "Branco",
-    sex: "male",
-    age: 2,
-    weight: 3.5,
-    vaccinated: true,
-    description:
-      "Gato Sphynx sem pelos. Muito afetuoso e necessita de cuidados especiais com a pele.",
-    status: "available",
-  },
-  {
-    type: "fish",
-    image: "neon.jpg",
-    name: "Tetra Neon",
-    color: "Vermelho e Azul",
-    sex: "male",
-    age: 1,
-    weight: 0.002,
-    vaccinated: false,
-    description:
-      "Peixe pequeno e colorido, perfeito para aquários comunitários. Muito pacífico.",
-    status: "available",
-  },
-  {
-    type: "fish",
-    image: "matogrosso.jpg",
-    name: "Mato Grosso",
-    color: "Laranja",
-    sex: "male",
-    age: 1,
-    weight: 0.003,
-    vaccinated: false,
-    description:
-      "Peixe pequeno e ativo. Ideal para aquários comunitários. Muito resistente.",
-    status: "available",
-  },
-  {
-    type: "fish",
-    image: "limpavidro.jpg",
-    name: "Limpa Vidro",
-    color: "Verde e Branco",
-    sex: "male",
-    age: 1,
-    weight: 0.004,
-    vaccinated: false,
-    description:
-      "Peixe útil para manutenção do aquário. Ajuda a manter os vidros limpos.",
-    status: "available",
-  },
-  {
-    type: "fish",
-    image: "tanictis.jpg",
-    name: "Tanictis",
-    color: "Vermelho",
-    sex: "male",
-    age: 1,
-    weight: 0.003,
-    vaccinated: false,
-    description:
-      "Peixe de fundo ativo. Ótimo para aquários comunitários. Ajuda na limpeza.",
-    status: "available",
-  },
-  {
-    type: "fish",
-    image: "acara.jpg",
-    name: "Acará Bandeira",
-    color: "Preto",
-    sex: "male",
-    age: 2,
-    weight: 0.015,
-    vaccinated: false,
-    description:
-      "Peixe elegante e territorial. Requer aquário espaçoso. Muito bonito.",
-    status: "available",
-  },
-];
 
 const searchNameSchema = z
   .string()
   .min(1, "Nome deve ter pelo menos 1 caractere");
 
 export const Pet = {
-  getAll: (): Pet[] => {
-    return data;
+  getAll: async (): Promise<Pet[]> => {
+    try {
+      const pets = await prisma.pet.findMany();
+      return Petschema.array().parse(pets);
+    } catch (error) {
+      console.error("Error retrieving pets:", error);
+      return [];
+    }
   },
 
-  getFromType: (type: z.infer<typeof Petschema.shape.type>): Pet[] => {
+  getFromType: async (
+    type: z.infer<typeof Petschema.shape.type>
+  ): Promise<Pet[]> => {
     try {
       const validatedType = Petschema.shape.type.parse(type);
-      return data.filter((item) => item.type === validatedType);
+      const pets = await prisma.pet.findMany({
+        where: {
+          type: validatedType,
+        },
+      });
+      return Petschema.array().parse(pets);
     } catch (error) {
       if (error instanceof z.ZodError) {
         console.error("Erro na validação do tipo:", {
           code: "INVALID_TYPE",
           details: error.errors,
         });
+      } else {
+        console.log("Database error:", error);
       }
       return [];
     }
   },
 
-  getFromName: (name: string): Pet[] => {
+  getFromName: async (name: string): Promise<Pet[]> => {
     try {
       const validatedName = searchNameSchema.parse(name);
+      const pets = await prisma.pet.findMany({
+        where: {
+          name: {
+            contains: validatedName,
+            mode: "insensitive",
+          },
+        },
+      });
 
-      return data.filter((item) =>
-        item.name.toLowerCase().includes(validatedName.toLowerCase())
-      );
+      return Petschema.array().parse(pets);
     } catch (error) {
       if (error instanceof z.ZodError) {
         console.error("Erro na validação do nome:", {
@@ -281,21 +81,33 @@ export const Pet = {
     }
   },
 
-  getByExactName: (name: string): Pet | null => {
+  getByExactName: async (name: string): Promise<Pet | null> => {
     try {
       const validatedName = searchNameSchema.parse(name);
 
-      return (
-        data.find(
-          (item) => item.name.toLowerCase() === validatedName.toLowerCase()
-        ) || null
-      );
+      const pet = await prisma.pet.findFirst({
+        where: {
+          name: {
+            equals: validatedName,
+            mode: "insensitive",
+          },
+        },
+      });
+
+      if (!pet) {
+        return null;
+      }
+
+      // Parse the resolved data, not the promise
+      return Petschema.parse(pet);
     } catch (error) {
       if (error instanceof z.ZodError) {
         console.error("Erro na validação do nome exato:", {
           code: "INVALID_EXACT_NAME",
           details: error.errors,
         });
+      } else {
+        console.error("Erro na busca do pet:", error);
       }
       return null;
     }

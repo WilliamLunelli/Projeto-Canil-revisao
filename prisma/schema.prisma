@@ -19,7 +19,7 @@ enum Sex {
 }
 
 enum Avaible {
-  avaible
+  available
   pending
 }
 
