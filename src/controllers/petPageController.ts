@@ -33,7 +33,6 @@ export const showPetPage = async (req: Request, res: Response) => {
       },
     };
 
-    console.log("Data being sent to template:", renderData);
     res.render("pages/petPage", renderData);
   } catch (error) {
     console.error("Erro ao processar página do pet:", error);

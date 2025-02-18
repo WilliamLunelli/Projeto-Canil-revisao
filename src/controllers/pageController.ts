@@ -4,10 +4,7 @@ import { createMenuObject } from "../Helpers/createMenuObject";
 
 export const home = async (req: Request, res: Response) => {
   try {
-    console.log("Accessing home page");
-
     const pets = await Pet.getAll();
-    console.log("Retrieved pets:", pets);
 
     res.render("pages/page", {
       menu: {
